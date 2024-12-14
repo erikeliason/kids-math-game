@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Math Game</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f8ff;
+            margin: 20px;
+        }
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #problem {
+            font-size: 2em;
+            margin: 20px;
+            color: #333;
+        }
+        #answer {
+            font-size: 1.5em;
+            width: 100px;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            font-size: 1.2em;
+            margin: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .feedback.correct {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .feedback.incorrect {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .score-container {
+            font-size: 1.5em;
+            margin: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Kids Math Game! 🎮</h1>
+        <div class="score-container">
+            Score: <span id="score">0</span>
+        </div>
+        <div id="problem"></div>
+        <input type="number" id="answer" placeholder="Your answer">
+        <br>
+        <button onclick="checkAnswer()">Submit</button>
+        <button onclick="newProblem()">Next Problem</button>
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <script>
+        let currentAnswer;
+        let score = 0;
+
+        function generateProblem() {
+            const num1 = Math.floor(Math.random() * 20) + 1;
+            const num2 = Math.floor(Math.random() * 20) + 1;
+            const operation = Math.random() < 0.5 ? '+' : '-';
+
+            if (operation === '+') {
+                currentAnswer = num1 + num2;
+                return `${num1} + ${num2} = ?`;
+            } else {
+                currentAnswer = num1 - num2;
+                return `${num1} - ${num2} = ?`;
+            }
+        }
+
+        function newProblem() {
+            document.getElementById('problem').textContent = generateProblem();
+            document.getElementById('answer').value = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('answer').focus();
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const feedback = document.getElementById('feedback');
+
+            if (isNaN(userAnswer)) {
+                feedback.textContent = 'Please enter a valid number!';
+                feedback.className = 'feedback incorrect';
+                return;
+            }
+
+            if (userAnswer === currentAnswer) {
+                feedback.textContent = '🎉 Correct! Well done! ⭐';
+                feedback.className = 'feedback correct';
+                score += 10;
+            } else {
+                feedback.textContent = `Try again! The correct answer was ${currentAnswer}`;
+                feedback.className = 'feedback incorrect';
+                score = Math.max(0, score - 5);
+            }
+
+            document.getElementById('score').textContent = score;
+        }
+
+        document.getElementById('answer').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        newProblem();
+    </script>
+</body>
+</html>
