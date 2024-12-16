@@ -1,0 +1,19 @@
+{
+  "name": "kids-math-game",
+  "version": "1.0.0",
+  "description": "A fun and interactive math game for kids to practice addition and subtraction! This simple web-based game helps children improve their math skills while having fun.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7"
+  }
+}
